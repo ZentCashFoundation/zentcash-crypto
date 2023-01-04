@@ -1,0 +1,100 @@
+name: CI Build Test
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  cpp_build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-10.15, windows-2019]
+    name: ${{ matrix.os }} - C++ Test
+    env:
+      MSBUILD_PATH: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin"
+    steps:
+    - uses: actions/checkout@v1
+    - name: Create Build Directory
+      run: mkdir build
+    - name: Install Dependencies (Linux)
+      if: matrix.os == 'ubuntu-18.04'
+      run: |
+        sudo apt update
+        sudo apt install -y gcc-8 g++-8
+    - name: Install Dependencies (OSX)
+      if: matrix.os == 'macos-10.15'
+      run: |
+        brew cask uninstall --force oclint || true
+        brew install llvm || brew upgrade llvm
+    - name: Execute CMake Process (Linux)
+      if: matrix.os == 'ubuntu-18.04'
+      run: |
+        export CC=gcc-8
+        export CXX=g++-8
+        cd build
+        cmake ..
+    - name: Execute CMake Process (OSX)
+      if: matrix.os == 'macos-10.15'
+      run: |
+        export CC=/usr/local/opt/llvm/bin/clang
+        export CXX=/usr/local/opt/llvm/bin/clang++
+        cd build
+        cmake ..
+    - name: Execute CMake Process (Windows)
+      if: matrix.os == 'windows-2019'
+      run: |
+        cd build
+        cmake -G "Visual Studio 16 2019" -A x64 ..
+    - name: Build Project (Linux & OSX)
+      if: matrix.os != 'windows-2019'
+      run: |
+        cd build
+        make
+    - name: Build Project (Windows)
+      if: matrix.os == 'windows-2019'
+      run: |
+        $env:PATH = "$env:PATH;$env:MSBUILD_PATH"
+        cd build
+        MSBuild zentcash-crypto.sln /p:Configuration=Release /m
+    - name: Test Cryptography (Linux & OSX)
+      if: matrix.os != 'windows-2019'
+      run: |
+        cd build
+        ./cryptotest
+    - name: Test Cryptography (Windows)
+      if: matrix.os == 'windows-2019'
+      run: |
+        cd build/Release
+        ./cryptotest.exe
+
+  node_build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-10.15]
+        node: ['8', '10', '11', '12', '13']
+    name: ${{ matrix.os }} - Node ${{ matrix.node }} Test
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      name: Set up Node
+      with:
+        node-version: ${{ matrix.node }}
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install Dependencies
+      run: npm install
+    - name: Execute Unit Tests
+      run: npm test
+    - name: Generate Prebuilds
+      if: matrix.node == '12' && github.event_name == 'release' && matrix.os != 'windows-latest' && github.repository == 'ZentCashFoundation/zentcash-crypto'
+      run: |
+        npm install -g prebuild
+        prebuild --all -u ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish to NPM
+      if: matrix.node == '12' && matrix.os == 'ubuntu-18.04' && github.event_name == 'release' && github.repository == 'ZentCashFoundation/zentcash-crypto'
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish
