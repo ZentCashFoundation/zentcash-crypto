@@ -1,16 +1,12 @@
 #!/bin/sh
-
 # Set up emscripten
-
 
 if [[ -z "${EMSDK}" ]]; then
   echo "Installing emscripten..."
   echo ""
-  if [[ ! -e ./emsdk ]]; then
-    git submodule init
-    git submodule update
-  fi
-  cd emsdk && git pull
+  git submodule init
+  git submodule update
+  cd emsdk
   ./emsdk install latest && ./emsdk activate latest
   source ./emsdk_env.sh
   cd ..
