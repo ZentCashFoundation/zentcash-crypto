@@ -7,10 +7,10 @@
 ![Prerequisite](https://img.shields.io/badge/node-%3E%3D6-blue.svg) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/ZentCashFoundation/zentcash-crypto/graphs/commit-activity) [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://github.com/ZentCashFoundation/zentcash-crypto/blob/master/LICENSE)
 
 #### Master Build Status
-[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/workflows/CI%20Build%20Tests/badge.svg?branch=main)](https://github.com/ZentCashFoundation/zentcash-crypto/actions)
+[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ZentCashFoundation/zentcash-crypto/actions/workflows/ci.yml)
 
 #### Development Build Status
-[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/workflows/CI%20Build%20Tests/badge.svg?branch=dev)](https://github.com/ZentCashFoundation/zentcash-crypto/actions)
+[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/ZentCashFoundation/zentcash-crypto/actions/workflows/ci.yml)
 
 This repository contains the necessary files to compile the cryptography library used within [Zent Cash](https://zent.cash) as a standalone library that can be included in various other projects in a variety of development environments, including:
 
