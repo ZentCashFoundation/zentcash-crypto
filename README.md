@@ -200,7 +200,7 @@ You will need the following packages: CMake (2.8 or higher), make, and git.
 ```bash
 git clone -b master --single-branch https://github.com/ZentCashFoundation/zentcash-crypto
 cd zentcash-crypto
-bash ./build_js.sh
+sudo bash ./build_js.sh
 ```
 
 This script will install the necessary dependencies on your machine and then proceed to compile the library to Native Javascript and WASM.
