@@ -7,7 +7,7 @@
 ![Prerequisite](https://img.shields.io/badge/node-%3E%3D6-blue.svg) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/ZentCashFoundation/zentcash-crypto/graphs/commit-activity) [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://github.com/ZentCashFoundation/zentcash-crypto/blob/master/LICENSE)
 
 #### Master Build Status
-[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/workflows/CI%20Build%20Tests/badge.svg?branch=master)](https://github.com/ZentCashFoundation/zentcash-crypto/actions)
+[![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/workflows/CI%20Build%20Tests/badge.svg?branch=main)](https://github.com/ZentCashFoundation/zentcash-crypto/actions)
 
 #### Development Build Status
 [![Build Status](https://github.com/ZentCashFoundation/zentcash-crypto/workflows/CI%20Build%20Tests/badge.svg?branch=dev)](https://github.com/ZentCashFoundation/zentcash-crypto/actions)
